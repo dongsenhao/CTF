@@ -1,1 +1,21 @@
+import math
+import sys
+from Crypto.PublicKey import RSA
+arsa=RSA.generate(1024)
+arsa.p=258631601377848992211685134376492365269
+arsa.q=286924040788547268861394901519826758027
+arsa.e=65537
+arsa.n=arsa.p*arsa.q
+Fn=long((arsa.p-1)*(arsa.q-1))
 
+#此处原理e*d=Fn*i+1,可删除，不然会报错
+i=1
+while(True):
+    x=(Fn*i)+1
+    if(x%arsa.e==0):
+           arsa.d=x/arsa.e
+           break
+    i=i+1
+private=open('private.pem','w')
+private.write(arsa.exportKey())
+private.close()
