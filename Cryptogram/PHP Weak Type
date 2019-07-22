@@ -1,0 +1,26 @@
+import hashlib
+
+
+payload = "QWERTYUIOPASDFGHJKLZXCVBNM"
+#payload = "qwertyuiopasdfghjklzxcvbnm"
+#payload = "0123456789"
+
+
+def calcMd5(s):
+	MD5 = hashlib.md5(s).hexdigest()
+	if MD5[0:2] == "0e" and MD5[2:32].isdigit():
+		print s,MD5
+ 
+ 
+def getStr(payload,s,slen):
+	if len(s) == slen:
+		#Custom string
+		calcMd5(s)
+		return s	
+	for j in xrange(len(payload)):
+		sl= s+payload[j]
+		getStr(payload,sl,slen)
+ 
+ 
+if __name__ == '__main__':
+	getStr(payload,'',7)
